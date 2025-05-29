@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { RegistrationProvider } from '@/contexts/RegistrationContext';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -19,10 +20,20 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <RegistrationProvider>
+        <Stack initialRouteName='welcome'>
+          <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+          <Stack.Screen name="setPin" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
+          <Stack.Screen name="confirmPin" options={{ headerShadowVisible: false, headerTitle: '', animation: 'fade_from_bottom' }} />
+          <Stack.Screen name="pushNotification" options={{ headerShadowVisible: false, headerTitle: '', animation: 'fade_from_bottom' }} />
+          <Stack.Screen name="addPhone" options={{ headerShadowVisible: false, headerTitle: '', animation: 'fade_from_bottom' }} />
+          <Stack.Screen name="code" options={{ headerShadowVisible: false, headerTitle: '', animation: 'fade_from_bottom' }} />
+          <Stack.Screen name="welcome" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </RegistrationProvider>
       <StatusBar style="auto" />
     </ThemeProvider>
   );
