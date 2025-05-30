@@ -1,13 +1,15 @@
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native'
+import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { useRegistration } from '@/contexts/RegistrationContext'
 import passwordSchema from '@/schemas/registration/password'
 import api from '@/utils/api'
 import * as SecureStore from 'expo-secure-store';
+import { router } from 'expo-router'
 
 
 export default function password() {
+    const [loading, setLoading] = useState(false)
     const { registrationData, updateRegistrationData } = useRegistration()
     const { values, touched, errors, setFieldValue, handleSubmit } = useFormik({
         initialValues: {
@@ -18,6 +20,7 @@ export default function password() {
             updateRegistrationData({ password: values.password })
 
             try {
+                setLoading(true)
                 const { data } = await api.post('/users/register', {
                     firstname: registrationData.firstName,
                     lastname: registrationData.lastName,
@@ -25,12 +28,16 @@ export default function password() {
                     password: registrationData.password,
                     middlename: registrationData.middleName
                 })
+                console.log('data', data);
+                
                 await SecureStore.setItemAsync('token', data.token);
-                return Alert.alert('Success', data.message)
-            } catch (error) {
+                router.replace('/(tabs)')
+            } catch (error: any) {
                 console.log(error);
 
                 return Alert.alert('Error', error.response.data.message || 'An error occurred')
+            }finally{
+                setLoading(false)
             }
         }
     })
@@ -51,8 +58,9 @@ export default function password() {
                 </TouchableOpacity>
             </View>
             <View style={styles.bottomSection}>
-                <TouchableOpacity style={styles.btn} onPress={() => handleSubmit()}>
-                    <Text style={styles.btnText}>Create Account</Text>
+                <TouchableOpacity style={styles.btn} onPress={() => handleSubmit()} disabled={loading}>
+                  {!loading &&  <Text style={styles.btnText}>Create Account</Text>}
+                  {loading && <ActivityIndicator size={'small'} color={'white'}/>}
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -81,7 +89,10 @@ const styles = StyleSheet.create({
         backgroundColor: "black",
         padding: 14,
         borderRadius: 30,
-        width: '100%'
+        width: '100%',
+        flexDirection:'row',
+        gap:4,
+        justifyContent:'center'
     },
     btnText: {
         color: 'white',

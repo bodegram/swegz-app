@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { router } from 'expo-router'
 
 export default function onboardingFive() {
     return (
@@ -34,7 +35,7 @@ export default function onboardingFive() {
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => router.push("/auth/location")}>
                         <Text style={styles.btnText}>Continue</Text>
                     </TouchableOpacity>
                 </View>

@@ -21,7 +21,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RegistrationProvider>
-        <Stack initialRouteName='welcome'>
+        <Stack>
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="auth" options={{ headerShown: false }} />
           <Stack.Screen name="setPin" options={{ headerShown: false, animation: 'fade_from_bottom' }} />

@@ -2,7 +2,7 @@ import Axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 
-const baseURL: string = 'http://192.168.0.161:3000/api';
+const baseURL: string = 'https://swegz-test-server.onrender.com/api';
 
 const api = Axios.create({
   baseURL,

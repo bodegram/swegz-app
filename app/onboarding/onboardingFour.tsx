@@ -24,10 +24,10 @@ export default function onboardingFour() {
                 <Text style={styles.text}>We are working with local regulators. we plan on
                     expanding to more countries </Text>
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => router.push('/auth/location')}>
                         <Text style={styles.btnText}>Get Started</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.login}>
+                    <TouchableOpacity style={styles.login} onPress={() => router.push("/auth/login")}>
                         <Text style={styles.loginText}>Login</Text>
                     </TouchableOpacity>
                 </View>
